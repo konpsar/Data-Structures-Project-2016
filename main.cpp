@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <iostream>
 
 #include "moviedb.h"
+
+using namespace std;
 
 #define BUFFER_SIZE 1024  /**< Maximum length of a line in input file */
 
@@ -17,8 +20,46 @@
 #define DPRINT(...)
 #endif /* DEBUG */
 
+int initialize() {
+	
+	//Users sentinel initialization
+	users_sentinel = new struct user;
+	users_sentinel->uid = -1;
+	users_sentinel->history = NULL;
+	users_sentinel->favorites = NULL;
+	users_sentinel->next = NULL;
+
+	//Initialize the users_senitnel as the users_list head
+	users_list = users_sentinel; 
+
+    //Movie categories array
+    for (int i=0;i<M;i++) { 
+		Movie_categories[i] = NULL; 
+	}
+
+    return 1;
+
+}
 
 int register_user(int uid) {
+	struct user * new_user = new struct user;
+
+	//initialize new_user
+	new_user->uid = uid;
+	new_user->history = NULL;
+	new_user->favorites = NULL;
+	
+	//insert new user in the beginning of the list
+	new_user->next = users_list;
+	//update users_list head
+	users_list = new_user;
+	
+	cout << "R <" << uid << ">" << endl;
+	cout << "\tUsers = <" << users_list->uid << ">";
+	for (struct user * current = users_list->next; current; current = current -> next){
+		cout<< ", <" << current->uid << ">";
+	}
+    cout<<endl<<"DONE"<<endl;
 	return 1;
 }
 
