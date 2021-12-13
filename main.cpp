@@ -56,7 +56,7 @@ int register_user(int uid) {
 	
 	cout << "R <" << uid << ">" << endl;
 	cout << "\tUsers = <" << users_list->uid << ">";
-	for (struct user * current = users_list->next; current; current = current -> next){
+	for (struct user * current = users_list->next; current->next; current = current -> next){
 		cout<< ", <" << current->uid << ">";
 	}
     cout<<endl<<"DONE"<<endl;
@@ -64,6 +64,27 @@ int register_user(int uid) {
 }
 
 int unregister_user(int uid) {
+	struct user * current;		
+	struct user * prev;
+	users_sentinel->uid = uid;
+
+	for (current=users_list; current->uid!=uid; current = current->next){
+		prev = current;
+	}
+	
+	if (current!=users_sentinel){
+		//delete user
+		prev->next = current-> next;
+		delete current;
+	}
+
+	users_sentinel->uid = -1; 
+	cout << "U <" << uid << ">" << endl;
+	cout << "\tUsers = <" << users_list->uid << ">";
+	for (struct user * current = users_list->next; current->next; current = current -> next){
+		cout<< ", <" << current->uid << ">";
+	}
+    cout<<endl<<"DONE"<<endl;
 	return 1;
 }
 
@@ -113,6 +134,7 @@ int print_users(void) {
  */
 int main(int argc, char** argv)
 {
+	initialize();
 	FILE *fin = NULL;
 	char buff[BUFFER_SIZE], event;
 
