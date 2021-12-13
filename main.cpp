@@ -32,12 +32,12 @@ int initialize() {
 	//Initialize the users_senitnel as the users_list head
 	users_list = users_sentinel; 
 
-    //Movie categories array
-    for (int i=0;i<M;i++) { 
+	//Movie categories array
+	for (int i=0;i<M;i++) { 
 		Movie_categories[i] = NULL; 
 	}
 
-    return 1;
+	return 1;
 
 }
 

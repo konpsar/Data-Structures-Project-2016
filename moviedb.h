@@ -28,10 +28,10 @@ struct user {
 };
 
 
-extern struct movie * Movie_categories[M]; /*The array of the movie categories*/
+struct movie * Movie_categories[M]; /*The array of the movie categories*/
 
-extern struct user * users_list; 	 /* global variable, pointer to the beginning of the users list*/
-extern struct user * users_sentinel; /* global variable, pointer to the sentinel node of the users list */
+struct user * users_list; 	 /* global variable, pointer to the beginning of the users list*/
+struct user * users_sentinel; /* global variable, pointer to the sentinel node of the users list */
 
 /*Needed function protypes definition*/
 
