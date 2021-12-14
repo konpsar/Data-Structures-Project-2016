@@ -1,5 +1,6 @@
 /* Number of movie categories (drama, oscar, cinephile, documentary, cartoon, new releases) */
 #define M 6 
+const char *categories_array[M] = {"drama", "oscar", "cinephile", "documentary", "cartoon", "new releases"};
 
 
 /* Structure defining a node of the movie lists */
@@ -32,6 +33,7 @@ struct movie * Movie_categories[M]; /*The array of the movie categories*/
 
 struct user * users_list; 	 /* global variable, pointer to the beginning of the users list*/
 struct user * users_sentinel; /* global variable, pointer to the sentinel node of the users list */
+
 
 /*Needed function protypes definition*/
 

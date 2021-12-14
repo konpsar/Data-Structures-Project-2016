@@ -59,7 +59,7 @@ int register_user(int uid) {
 	for (struct user * current = users_list->next; current->next; current = current -> next){
 		cout<< ", <" << current->uid << ">";
 	}
-    cout<<endl<<"DONE"<<endl;
+    cout<<endl<<"DONE"<<endl<<endl;
 	return 1;
 }
 
@@ -83,18 +83,55 @@ int unregister_user(int uid) {
 		//free memory
 		delete current;
 	}
-
+	// reset sentinel to its default values
 	users_sentinel->uid = -1; 
+
+	// print users
 	cout << "U <" << uid << ">" << endl;
 	cout << "\tUsers = <" << users_list->uid << ">";
 	for (struct user * current = users_list->next; current->next; current = current -> next){
 		cout<< ", <" << current->uid << ">";
 	}
-    cout<<endl<<"DONE"<<endl;
+    cout<<endl<<"DONE"<<endl<<endl;
+
 	return 1;
 }
 
 int add_new_movie(int mid, int category, int year) {
+	// new releases list should remain sorted after addition
+	// I will implement the addition with the logic of insertion sort
+	// First the search for the right index to insert the movie will be implemented 
+	// with linear search, and for optimization, I can implement it afterwards with binary search. 
+
+	struct movie *movies_list_head=NULL, *current=NULL, *prev=NULL;
+	struct movie *new_movie = new struct movie;
+	new_movie->mid      = mid;
+	new_movie->category = category;
+	new_movie->year     = year;
+
+	// Linear search for the place where new movie should be inserted 
+	for (current = Movie_categories[M-1]; current && current->mid<mid; current = current->next) prev = current;
+	// new movie should be placed between prev and current
+	if (!prev){
+		new_movie->next = current;
+		Movie_categories[M-1] = new_movie;
+	}else{
+		prev->next = new_movie;
+		new_movie->next = current;	
+	}
+
+	// print movies
+	cout << "A" << endl << endl;
+	cout << "\tMOVIES:";
+	for (int i=0; i<M; i++){
+		cout << endl << "\t" << categories_array[i] << ":";
+		// print all movies from category_i
+		for (struct movie * current = Movie_categories[i]; current; current = current -> next){
+			cout<< " <" << current->mid << ">";
+		}
+	}
+    cout<<endl<<"DONE"<<endl<<endl;
+
 	return 1;
 }
 
