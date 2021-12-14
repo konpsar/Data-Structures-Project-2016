@@ -64,17 +64,23 @@ int register_user(int uid) {
 }
 
 int unregister_user(int uid) {
-	struct user * current;		
-	struct user * prev;
+	struct user * current = NULL;		
+	struct user * prev = NULL;
 	users_sentinel->uid = uid;
 
-	for (current=users_list; current->uid!=uid; current = current->next){
-		prev = current;
-	}
+	// search for target node (linear search)
+	for (current=users_list; current->uid!=uid; current = current->next) prev = current;
 	
 	if (current!=users_sentinel){
 		//delete user
-		prev->next = current-> next;
+		if (!prev){ 
+			// delete head of list
+			users_list = current->next;
+		}else{
+			// delete any other node in list
+			prev->next = current-> next;
+		}
+		//free memory
 		delete current;
 	}
 
