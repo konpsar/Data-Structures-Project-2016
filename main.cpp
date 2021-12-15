@@ -136,6 +136,65 @@ int add_new_movie(int mid, int category, int year) {
 }
 
 int categorize_movies() {
+	// movies from the category new releases should be split in the corresponding category at the end of the algorithm
+	// each category's list should be sorted in ascending order.
+	// It is asked for the complexity of the algorithm to be O(n)
+	// An idea for the implementation is to implement an algorithm that works like the merge step of merge sort,
+	// where two sorted seqs must be merged into 1. The best way to do it is by tracking where we have reached on each list after each 
+	// addition with ptrs. 
+
+	// L_src  = {A -> B -> C}
+	// L_dest = {D -> E -> F} // L_dest = {} 
+	// If dest_prev==NULL => 
+	//		-Case1:	L_dest is empty -- dest_current is NULL (A must be head of L_dest) or
+	//		-Case2:	A should be placed before D ({A->D->E->F}) 
+	// 		In both cases A must be the new head of the L_dest and L_dest->next should point to the previous head
+	// Else =>
+	//      -Case3:  the insertion index is not at the start of the list
+	//		L_src  = {A -> B -> C}
+	//		L_dest = {D -> E -> F} 
+	//		After insertion -> L_dest = {D->A->E->F}
+	
+	int categ=-1;
+	struct movie *current=NULL, *tmp = NULL, *dest_current, *dest_prev, *categ_list_ind[M-1];
+	// Initialize each index with the head of the corresponding list
+	for(int i=0; i<M-1; i++) categ_list_ind[i] = Movie_categories[i];
+
+	current = Movie_categories[M-1];
+    while (current){
+		tmp = current->next; // keep track of next node in list
+		categ = current->category;
+		// Find the place where the current movie should be placed 
+		// (starting from the index where we left off in previous insertion) 
+		dest_prev = NULL; dest_current = NULL;
+		for(dest_current = categ_list_ind[categ]; dest_current && dest_current->mid < current->mid; dest_current = dest_current->next) 	dest_prev = dest_current;
+		
+		if (!dest_prev){ // Cases 1, 2
+			current->next = dest_current; //A -> dest_current (L_dest) -- unlink with the rest of L_src
+			Movie_categories[categ] = current; // current as head
+			categ_list_ind[categ] = current; // Update also temp saved index
+		}else{ // Case 3
+		// dest_current = E, dest_prev = D => prepei na katalhksoume se L_dest = {D->A->E->F}
+		current->next = dest_current; // Α -> dest_current (E)
+		// current->next = dest_prev->next; // Α -> dest_current (E)
+		dest_prev->next = current;
+		}
+
+		Movie_categories[M-1] = tmp; // Update new_releases list head
+		current = tmp;
+	}
+	// print movies
+	cout << "C" << endl << endl;
+	cout << "\tMOVIES:";
+	for (int i=0; i<M; i++){
+		cout << endl << "\t" << categories_array[i] << ":";
+		// print all movies from category_i
+		for (struct movie * current = Movie_categories[i]; current; current = current -> next){
+			cout<< " <" << current->mid << ">";
+		}
+	}
+    cout<<endl<<"DONE"<<endl<<endl;
+
 	return 1;
 }
 
