@@ -199,6 +199,71 @@ int categorize_movies() {
 }
 
 int rate_movie(int uid, int mid, int score) {
+	struct user_movie *cur_u_movie=NULL, *prev_u_movie = NULL, *rated_movie = new struct user_movie;
+	struct movie * cur_movie=NULL;
+	struct user * cur_user=NULL;
+
+	rated_movie->mid   = mid;
+	rated_movie->score = score;
+
+//Search for the movie with mid==mid
+	for(int m=0; m<M; m++){
+		//Search all lists of movies
+		cur_movie = Movie_categories[m];
+		while (cur_movie && cur_movie->mid!=mid) cur_movie = cur_movie->next;
+		if (cur_movie) break; // if cur_movie, it is implied that cur_movie->mid == mid
+	}
+	if(!cur_movie){
+		cout<<"Movie with mid <"<<mid<<"> not found.";
+		return 0;
+	}
+	rated_movie->category = cur_movie->category;
+//Search for user with uid==uid
+	users_sentinel->uid = uid;
+	for(cur_user = users_list; cur_user->uid!=uid; cur_user=cur_user->next);
+	if (cur_user==users_sentinel){
+		cout << "User with uid: " << uid << " not found" << endl;
+		users_sentinel->uid = -1;
+		return 0;
+	}
+	users_sentinel->uid = -1;
+	cout<< "usr " << cur_user->uid << ",  mv " << cur_movie->mid << endl;
+//Add rated_movie at user history
+
+	cur_u_movie = cur_user->history;
+	while(cur_u_movie && cur_u_movie->mid > mid){
+		prev_u_movie = cur_u_movie;
+		cur_u_movie = cur_u_movie->next;
+	}
+	if(!prev_u_movie){
+		rated_movie->next = cur_u_movie;
+		rated_movie->prev = NULL;
+		cur_user->history = rated_movie;
+	}else{
+		cout<<"rated_movie" << rated_movie->mid<<endl;
+		cout<<"cur_u_movie" << cur_u_movie->mid<<endl;
+		cout<<"cur_u_movie->prev" << cur_u_movie->prev->mid<<endl;
+		
+		rated_movie->prev = cur_u_movie->prev;
+		rated_movie->next = cur_u_movie;
+		cur_u_movie->prev->next = rated_movie;
+		cur_u_movie->prev = rated_movie;
+	}
+	// for(cur_u_movie = cur_user->history; cur_u_movie && cur_u_movie->mid > mid; cur_u_movie = cur_u_movie->next);
+	// // At the end of this for, we are at the place where new rated movie should be placed
+	// rated_movie->prev = cur_u_movie->prev;
+	// rated_movie->next = cur_u_movie;
+	// cur_u_movie->prev->next = rated_movie;
+	// cur_u_movie->prev = rated_movie; 
+
+	// print movies
+	cout << "G <" << uid << "> <" << mid << "> <" << score << ">" << endl;
+	cout << "\tHISTORY:";
+	printf("<%d, %d>", cur_user->history->mid, cur_user->history->score);    
+	for(cur_u_movie=cur_user->history->next; cur_u_movie; cur_u_movie=cur_u_movie->next){
+		printf(", <%d, %d> ", cur_u_movie->mid, cur_u_movie->score);    
+	}
+    cout<<endl<<"DONE"<<endl<<endl;
 	return 1;
 }
 
