@@ -205,7 +205,6 @@ int rate_movie(int uid, int mid, int score) {
 
 	rated_movie->mid   = mid;
 	rated_movie->score = score;
-
 //Search for the movie with mid==mid
 	for(int m=0; m<M; m++){
 		//Search all lists of movies
@@ -222,16 +221,15 @@ int rate_movie(int uid, int mid, int score) {
 	users_sentinel->uid = uid;
 	for(cur_user = users_list; cur_user->uid!=uid; cur_user=cur_user->next);
 	if (cur_user==users_sentinel){
-		cout << "User with uid: " << uid << " not found" << endl;
 		users_sentinel->uid = -1;
 		return 0;
 	}
 	users_sentinel->uid = -1;
-	cout<< "usr " << cur_user->uid << ",  mv " << cur_movie->mid << endl;
 //Add rated_movie at user history
 
 	cur_u_movie = cur_user->history;
-	while(cur_u_movie && cur_u_movie->mid > mid){
+
+	while(cur_u_movie && cur_u_movie->score > score){
 		prev_u_movie = cur_u_movie;
 		cur_u_movie = cur_u_movie->next;
 	}
@@ -239,15 +237,11 @@ int rate_movie(int uid, int mid, int score) {
 		rated_movie->next = cur_u_movie;
 		rated_movie->prev = NULL;
 		cur_user->history = rated_movie;
-	}else{
-		cout<<"rated_movie" << rated_movie->mid<<endl;
-		cout<<"cur_u_movie" << cur_u_movie->mid<<endl;
-		cout<<"cur_u_movie->prev" << cur_u_movie->prev->mid<<endl;
-		
-		rated_movie->prev = cur_u_movie->prev;
+	}else{		
+		rated_movie->prev = prev_u_movie;
 		rated_movie->next = cur_u_movie;
-		cur_u_movie->prev->next = rated_movie;
-		cur_u_movie->prev = rated_movie;
+		prev_u_movie->next = rated_movie;
+		if (cur_u_movie) {cur_u_movie->prev = rated_movie;}
 	}
 	// for(cur_u_movie = cur_user->history; cur_u_movie && cur_u_movie->mid > mid; cur_u_movie = cur_u_movie->next);
 	// // At the end of this for, we are at the place where new rated movie should be placed
