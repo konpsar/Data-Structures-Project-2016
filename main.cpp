@@ -80,7 +80,20 @@ int unregister_user(int uid) {
 			// delete any other node in list
 			prev->next = current-> next;
 		}
-		//free memory
+		//free memory - delete all fields of struct
+		struct user_movie *u_movie_next=NULL, *u_movie = current->history ;
+		while(u_movie){
+			u_movie_next = u_movie->next;
+			delete u_movie;
+			u_movie = u_movie_next;
+		}
+		u_movie = current->favorites;
+		// u_movie_next = NULL;
+		while(u_movie){
+			u_movie_next = u_movie->next;
+			delete u_movie;
+			u_movie = u_movie_next;
+		}
 		delete current;
 	}
 	// reset sentinel to its default values
