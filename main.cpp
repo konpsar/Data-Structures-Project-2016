@@ -113,8 +113,7 @@ int unregister_user(int uid) {
 int add_new_movie(int mid, int category, int year) {
 	// new releases list should remain sorted after addition
 	// I will implement the addition with the logic of insertion sort
-	// First the search for the right index to insert the movie will be implemented 
-	// with linear search, and for optimization, I can implement it afterwards with binary search. 
+	// First the search for the right index to insert the movie will be implemented.
 
 	struct movie *movies_list_head=NULL, *current=NULL, *prev=NULL;
 	struct movie *new_movie = new struct movie;
