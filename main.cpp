@@ -274,14 +274,13 @@ int rate_movie(int uid, int mid, int score) {
 }
 
 int identify_favorite_movies() {
-	// As a first naive approach, each user's favorites list will be revuilt by copying all 
+	// As a first naive approach, each user's favorites list will be rebuilt by copying all 
 	// movies from history with score>=7. Previous favorites list will be deleted node by node.
 	// As a more optimized approach, it would be better to check in current favorites list for
 	// each movie from history and add (copy) only the non existent ones - that are in history and 
 	// not in favorites.
 	// If we calculate also the case where the movie scores from history can be changes, we should 
 	// also check if the scores of the movies added in favorites are up to date.
-
 	struct user_movie *prev_favs=NULL, *last_added = NULL, *cur_u_movie=NULL, *copied_movie = NULL;
 	struct user * cur_user=NULL;
 
@@ -296,7 +295,8 @@ int identify_favorite_movies() {
 			copied_movie->next = NULL;
 			copied_movie->prev = last_added;
 			if (!last_added){cur_user->favorites = copied_movie;}
-			last_added = copied_movie;									
+			last_added = copied_movie;	
+			cur_u_movie = cur_u_movie->next;								
 		}
 	}
 	//Delete prev favorites list node-by-node. 
@@ -305,21 +305,24 @@ int identify_favorite_movies() {
 		delete prev_favs;
 		prev_favs = cur_u_movie;
 	}
-	
+
 	// print movies
-	// cout << "F" << endl;
-	// for (cur_user = users_list; cur_user; cur_user = cur_user->next){
-	// 	printf("\tFAVORITES OF USER WITH UID <%d>:", cur_user->uid);
-	// 	if (cur_user->favorites){
-	// 		printf("\t\t<%d, %d>", cur_user->favorites->mid, cur_user->favorites->score);    
-	// 	}
-	// 	for(cur_u_movie=cur_user->favorites->next; cur_u_movie; cur_u_movie=cur_u_movie->next){
-	// 		printf(", <%d, %d> ", cur_u_movie->mid, cur_u_movie->score);    
-	// 	}
-	// }
-    // cout<<endl<<"DONE"<<endl<<endl;
+	cout << "F" << endl;
+	for (cur_user = users_list; cur_user; cur_user = cur_user->next){
+		printf("\tFAVORITES OF USER WITH UID <%d>:\0", cur_user->uid);
+	
+		if (cur_user->favorites){
+			printf("<%d, %d>\0", cur_user->favorites->mid, cur_user->favorites->score);    
+			for(cur_u_movie=cur_user->favorites->next; cur_u_movie; cur_u_movie=cur_u_movie->next){
+				printf(", <%d, %d>\0", cur_u_movie->mid, cur_u_movie->score);    
+			}
+		}
+		cout<<endl;
+	}
+    cout<<endl<<"DONE"<<endl<<endl;
 		return 1;
 }
+
 
 int suggest_movie(int uid, int mid) {
 	return 1;
