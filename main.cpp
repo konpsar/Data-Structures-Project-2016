@@ -308,7 +308,7 @@ int identify_favorite_movies() {
 
 	// print movies
 	cout << "F" << endl;
-	for (cur_user = users_list; cur_user; cur_user = cur_user->next){
+	for (cur_user = users_list; cur_user->uid!=-1; cur_user = cur_user->next){
 		printf("\tFAVORITES OF USER WITH UID <%d>:\0", cur_user->uid);
 	
 		if (cur_user->favorites){
