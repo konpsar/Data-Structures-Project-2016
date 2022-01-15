@@ -359,6 +359,8 @@ int suggest_movie(int uid, int mid) {
 		score = selected_u_movie->score;
 		while(cur_u_movie && cur_u_movie->category != categ && cur_u_movie->score < score) cur_u_movie = cur_u_movie->prev;
 		printf("\tPrimary movie: <%d> <%d> <%d>\n", selected_u_movie->mid, selected_u_movie->score, selected_u_movie->category);		
+		// Too tight suggestion rules. If any of the score/category suggestion is relaxed, sugestion results are better.
+		// With the current case, not all times a sugestion exist.
 		if(!cur_u_movie || cur_u_movie->category!=categ || cur_u_movie->score<score){
 			printf("\tSuggested movie: -\n");
 		}else{
@@ -371,6 +373,24 @@ int suggest_movie(int uid, int mid) {
 
 
 int search_movie(int mid) {
+	struct movie * cur_movie=NULL;
+
+	//Search for the movie with mid==mid
+	for(int m=0; m<M; m++){
+		//Search all lists of movies
+		cur_movie = Movie_categories[m];
+		while (cur_movie && cur_movie->mid!=mid) cur_movie = cur_movie->next;
+		if (cur_movie) break; // if cur_movie, it is implied that cur_movie->mid == mid
+	}
+	printf("I <%d>\n", mid);
+
+	if(!cur_movie){
+		printf("!\tMovie with mid <%d> not found.\n", mid);
+		return 0;
+	}else{
+		printf("\t<%d>, <%d>\n", cur_movie->category, cur_movie->year);
+	}
+	cout<<"DONE"<<endl<<endl;
 	return 1;
 }
 
