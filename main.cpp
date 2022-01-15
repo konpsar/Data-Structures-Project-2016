@@ -395,8 +395,20 @@ int search_movie(int mid) {
 }
 
 int print_movies(void) {
+	struct movie *movies_list_head=NULL, *current=NULL, *prev=NULL;
+	cout << "M" << endl << endl;
+	cout << "MOVIES:";
+	for (int i=0; i<M; i++){
+		printf("\n\t<%s>: ", categories_array[i]);
+		// print all movies from category_i
+		for (struct movie * current = Movie_categories[i]; current; current = current -> next){
+			printf("<%d> ", current->mid);
+		}
+	}
+    cout<<endl<<"DONE"<<endl<<endl;
 	return 1;
 }
+
 
 int print_users(void) {
 	return 1;
