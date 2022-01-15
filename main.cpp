@@ -325,8 +325,46 @@ int identify_favorite_movies() {
 
 
 int suggest_movie(int uid, int mid) {
+	struct user_movie *cur_u_movie=NULL, *selected_u_movie = NULL, *prev_match = NULL;
+	struct movie * cur_movie=NULL;
+	struct user * cur_user=NULL;
+	int categ=-1, score = -1;
+
+	//Search for user with uid==uid
+	users_sentinel->uid = uid;
+	for(cur_user = users_list; cur_user->uid!=uid; cur_user=cur_user->next);
+	if (cur_user==users_sentinel){
+		users_sentinel->uid = -1;
+		return 0;
+	}
+	users_sentinel->uid = -1;
+	
+	cur_u_movie = cur_user->favorites;
+	while(cur_u_movie && cur_u_movie->mid!=mid) cur_u_movie=cur_u_movie->next;
+	//@ the end of while, cur_u_movie will be NULL or the selected u_movie
+	
+	printf("S <%d> <%d>\n", uid, mid);
+	
+	if (!cur_u_movie){//cur_u_movie==NULL
+		printf("!\tMovie with mid <%d> not found in user's <%d> favorites.\n", mid, uid);
+		return 0;
+	}else{
+		printf("\tPrimary movie: <%d> <%d> <%d>\n", selected_u_movie->mid, selected_u_movie->score, selected_u_movie->category);		
+		selected_u_movie = cur_u_movie;
+		cur_u_movie=cur_u_movie->prev;
+		categ = selected_u_movie->category;
+		score = selected_u_movie->score;
+		while(cur_u_movie && cur_u_movie->category != categ && cur_u_movie->score > score) cur_u_movie = cur_u_movie->prev;
+		if(!cur_u_movie){
+			printf("\tSuggested movie: -\n");
+		}else{
+			printf("\tSuggested movie: <%d> <%d> <%d>\n", cur_u_movie->mid, cur_u_movie->score, cur_u_movie->category);
+		}
+	}
+	cout<<endl<<"DONE"<<endl<<endl;
 	return 1;
 }
+
 
 int search_movie(int mid) {
 	return 1;
