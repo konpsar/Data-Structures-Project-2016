@@ -353,13 +353,13 @@ int suggest_movie(int uid, int mid) {
 		printf("!\tMovie with mid <%d> not found in user's <%d> favorites.\n", mid, uid);
 		return 0;
 	}else{
-		printf("\tPrimary movie: <%d> <%d> <%d>\n", selected_u_movie->mid, selected_u_movie->score, selected_u_movie->category);		
 		selected_u_movie = cur_u_movie;
 		cur_u_movie=cur_u_movie->prev;
 		categ = selected_u_movie->category;
 		score = selected_u_movie->score;
-		while(cur_u_movie && cur_u_movie->category != categ && cur_u_movie->score > score) cur_u_movie = cur_u_movie->prev;
-		if(!cur_u_movie){
+		while(cur_u_movie && cur_u_movie->category != categ && cur_u_movie->score < score) cur_u_movie = cur_u_movie->prev;
+		printf("\tPrimary movie: <%d> <%d> <%d>\n", selected_u_movie->mid, selected_u_movie->score, selected_u_movie->category);		
+		if(!cur_u_movie || cur_u_movie->category!=categ || cur_u_movie->score<score){
 			printf("\tSuggested movie: -\n");
 		}else{
 			printf("\tSuggested movie: <%d> <%d> <%d>\n", cur_u_movie->mid, cur_u_movie->score, cur_u_movie->category);
