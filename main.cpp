@@ -285,6 +285,7 @@ int identify_favorite_movies() {
 	struct user * cur_user=NULL;
 
 	for (cur_user = users_list; cur_user; cur_user = cur_user->next){
+		last_added=NULL;
 		cur_u_movie = cur_user->history;
 		prev_favs = cur_user->favorites; 
 		while(cur_u_movie && cur_u_movie->score>=7){
@@ -295,11 +296,14 @@ int identify_favorite_movies() {
 			copied_movie->next = NULL;
 			copied_movie->prev = last_added;
 			if (!last_added){cur_user->favorites = copied_movie;}
+			else{
+				last_added->next = copied_movie;
+				copied_movie->prev = last_added;}
 			last_added = copied_movie;	
 			cur_u_movie = cur_u_movie->next;								
 		}
 	}
-	//Delete prev favorites list node-by-node. 
+	// Delete prev favorites list node-by-node. 
 	while(prev_favs){
 		cur_u_movie = prev_favs->next;
 		delete prev_favs;
