@@ -411,6 +411,27 @@ int print_movies(void) {
 
 
 int print_users(void) {
+	struct user_movie *cur_u_movie=NULL;
+
+	cout << "P" << endl << endl;
+	cout << "\tUSERS:" << endl;
+		
+	for (struct user * current = users_list; current->uid!=-1; current = current -> next){
+		printf("\n\t<%d>\n", current->uid);
+		
+		// print history
+		cout << "\n\t\tHISTORY: ";
+		for(cur_u_movie=current->history; cur_u_movie; cur_u_movie=cur_u_movie->next){
+			printf("<%d> \0", cur_u_movie->mid);    
+		}
+
+		// print favorites
+		cout << "\n\t\tFAVORITES: ";    
+		for(cur_u_movie=current->favorites; cur_u_movie; cur_u_movie=cur_u_movie->next){
+			printf("<%d> \0", cur_u_movie->mid);    
+		}
+	}
+	cout<<endl<<"DONE"<<endl<<endl;
 	return 1;
 }
 
