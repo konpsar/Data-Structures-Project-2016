@@ -242,11 +242,6 @@ int rate_movie(int uid, int mid, int score) {
 	cur_u_movie = cur_user->history;
 
 	while(cur_u_movie && cur_u_movie->score > score){
-		// if u find rated_movie->mid while traversing the list, it should be deleted
-		if (cur_u_movie->mid==mid);{
-			// TODO
-			
-		}
 		prev_u_movie = cur_u_movie;
 		cur_u_movie = cur_u_movie->next;
 	}
