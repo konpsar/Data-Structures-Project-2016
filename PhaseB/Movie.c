@@ -1,11 +1,18 @@
-/*****************************************************
- * @file   MyMovie.c                                 *
- * @author Alexandra Barka <barka@csd.uoc.gr>        *
- *                                                   *
- * @brief Implementation for Movie.h 				 *
- * Project: Spring 2016						         *
- *****************************************************/
 #include "Movie.h"
+
+
+
+/**
+ * @brief Initializes all structures that have to be created and initialized.
+ * 
+ * @return 0 on success
+ *         1 on failure
+ */
+
+ int initialize(){
+	 return 1;
+ }
+ 
 
 /**
  * @brief Creates a new user.

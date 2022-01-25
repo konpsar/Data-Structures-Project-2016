@@ -1,10 +1,3 @@
-/*****************************************************
- * @file   main.c                                    *
- * @author Alexandra Barka <barka@csd.uoc.gr>        *
- *                                                   *
- * @brief Header File for Data Structures (CS240b)   *
- * Project: Spring 2016						         *
- *****************************************************/
 #ifndef MOVIE_FILE
 #define MOVIE_FILE
 

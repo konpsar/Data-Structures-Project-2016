@@ -1,11 +1,3 @@
-/*****************************************************
- * @file   main.c                                    *
- * @author Alexandra Barka <barka@csd.uoc.gr>        *
- *                                                   *
- * @brief Main Function for Data Structures (CS240b) *
- * Project: Spring 2016						         *
- *****************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
