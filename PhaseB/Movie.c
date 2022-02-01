@@ -1,19 +1,6 @@
 #include "Movie.h"
 
 
-
-/**
- * @brief Initializes all structures that have to be created and initialized.
- * 
- * @return 0 on success
- *         1 on failure
- */
-
- int initialize(){
-	 return 1;
- }
- 
-
 /**
  * @brief Creates a new user.
  * Creates a new user with userID as its identification.
@@ -25,7 +12,16 @@
  */
 
  int register_user(unsigned int userID){
-	 return 1;
+	struct user * new_user = new struct user;
+	
+	//initialize new_user
+	new_user->userID = userID;
+	new_user->history = NULL;
+	
+
+	// Add to the right place of hashtable
+
+	return 1;
  }
  
 /**

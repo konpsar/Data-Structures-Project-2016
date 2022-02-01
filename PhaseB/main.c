@@ -45,8 +45,27 @@ movie_t *new_releases;     /* New releases simply-linked binary tree*/
 movieCategory_t *categoryArray[5];  /* The categories array (pinakas kathgoriwn)*/
 
 
+/**
+ * @brief Initializes all structures that have to be created and initialized.
+ * 
+ * @return 0 on success
+ *         1 on failure
+ */
+
+ int initialize(){
+	 //max users num -> max_users
+	 //max userID -> max_id
+	 int i=0;
+	 // CHECK < or <=
+	 while(primes_g[i]<max_id) i++;
+	 hashtable_size = primes_g[i];
+
+	 return 1;
+ }
+
 int main(int argc, char** argv)
 {
+	initialize();
 	FILE *fin = NULL;
 	char buff[BUFFER_SIZE], event;
 
