@@ -45,6 +45,35 @@ movie_t *new_releases;     /* New releases simply-linked binary tree*/
 movieCategory_t *categoryArray[5];  /* The categories array (pinakas kathgoriwn)*/
 
 
+// Idea of simple hash:
+//  hash function (kmodM) where M is the size of the hash table.
+// [0 max_id] all possible user ids -  big interval. ways to make it smaller?
+// If we rip it in max_users number of sub-intervals, on avg, one user will fall in each interval
+// M_step = max_id/max_users. Idea:  Make set of possible hash function outputs smaller using given information about the number and the id of the users.
+// M = max_users 
+// Hash function = (k/M_step)modM
+// should be revised and cheched thorougly to be sure theoretically
+// if max_id = 100 and max_users=25
+// hash table size is  25 with step 4??
+// for key=4: HF = (floor(4/4))mod25 =1mod25 = 1
+// for key=14: HF = (floor(14/4))mod25 =3mod25 = 3
+// for key=93: HF = (floor(93/4))mod25 =23mod25 = 23
+// for key=100: HF = (floor(100/4))mod25 = 25mod25 = 0
+// to reduce possibility of collisions, i will use the first prime number 
+// bigger than max_users
+
+int hash_function(int k, int hashtable_size){
+	int M_step = int(max_id/max_users);
+	return (k/M_step)%hashtable_size;
+}
+
+int hash_lookup(int l){
+	return 1;
+}
+int hash_add(int n){
+	return 1;
+}
+
 /**
  * @brief Initializes all structures that have to be created and initialized.
  * 
@@ -52,14 +81,19 @@ movieCategory_t *categoryArray[5];  /* The categories array (pinakas kathgoriwn)
  *         1 on failure
  */
 
+
  int initialize(){
 	 //max users num -> max_users
 	 //max userID -> max_id
 	 int i=0;
-	 // CHECK < or <=
-	 while(primes_g[i]<max_id) i++;
-	 hashtable_size = primes_g[i];
+	 int hash_size_not_prime = max_users;
+	//  if (hash_size_not_prime<1) hash_size_not_prime = max_users/max_id;
 
+	 // CHECK < or <=
+	//  while(primes_g[i]<max_id) i++;
+	 while(primes_g[i]<hash_size_not_prime) i++;
+	 hashtable_size = primes_g[i];
+	 
 	 return 1;
  }
 
