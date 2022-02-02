@@ -1,4 +1,6 @@
-#include "Movie.h"
+#include "Movie.hpp"
+#include <stdio.h>
+#include <stdlib.h>
 
 
 /**
@@ -11,8 +13,8 @@
  *         1 on failure
  */
 
- int register_user(unsigned int userID){
-	struct user * new_user = new struct user;
+int register_user(unsigned int userID){
+	user_t * new_user = new user_t;
 	
 	//initialize new_user
 	new_user->userID = userID;

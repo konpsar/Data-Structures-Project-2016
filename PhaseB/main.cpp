@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "Movie.h"
+#include "Movie.hpp"
 
 #define BUFFER_SIZE 1024  /**< Maximum length of a line in input file */
 
