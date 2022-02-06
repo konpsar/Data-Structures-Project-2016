@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <cmath>
 
 #include "Movie.hpp"
 
@@ -46,12 +47,15 @@ movieCategory_t *categoryArray[5];  /* The categories array (pinakas kathgoriwn)
 
 
 // Idea of simple hash:
-//  hash function (kmodM) where M is the size of the hash table.
+// Make set of possible hash function outputs smaller using given information about the number and the id of the users.
+// hash function (kmodM) where M is the size of the hash table.
 // [0 max_id] all possible user ids -  big interval. ways to make it smaller?
-// If we rip it in max_users number of sub-intervals, on avg, one user will fall in each interval
-// M_step = max_id/max_users. Idea:  Make set of possible hash function outputs smaller using given information about the number and the id of the users.
+// We assume the user-IDs are split uniformly in the [0 max_id], thus 
+// if we map it [0 max_id] into [0 max_users], on avg, one user will fall in each interval.
+// M_step = max_id/max_users. 
+// mul_map = max_users/max_id
 // M = max_users 
-// Hash function = (k/M_step)modM
+// Hash function = (k/M_step)modM = (k*mul_map)modM
 // should be revised and cheched thorougly to be sure theoretically
 // if max_id = 100 and max_users=25
 // hash table size is  25 with step 4??
@@ -62,15 +66,20 @@ movieCategory_t *categoryArray[5];  /* The categories array (pinakas kathgoriwn)
 // to reduce possibility of collisions, i will use the first prime number 
 // bigger than max_users
 
-int hash_function(int k, int hashtable_size){
-	int M_step = int(max_id/max_users);
-	return (k/M_step)%hashtable_size;
+int hash_function(int key, int hashtable_size){
+	// int M_step = int(max_id/max_users);
+	int mul_map = int(std::floor(max_users/max_id));
+	return (key*mul_map)%hashtable_size;
 }
 
-int hash_lookup(int l){
+int hash_lookup(int key){
 	return 1;
 }
-int hash_add(int n){
+int hash_add(int key){
+	return 1;
+}
+
+int hash_delete(int key){
 	return 1;
 }
 
