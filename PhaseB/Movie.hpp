@@ -68,8 +68,6 @@ extern unsigned int primes_g[160];
 
 int get_hash(int key, int hashtable_size);
 int hash_lookup(int key);
-int hash_add(int key);
-int hash_delete(int key);
 
 /**
  * @brief Creates a new user.

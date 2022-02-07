@@ -75,13 +75,6 @@ int get_hash(int key, int hashtable_size){
 int hash_lookup(int key){
 	return 1;
 }
-int hash_add(int key){
-	return 1;
-}
-
-int hash_delete(int key){
-	return 1;
-}
 
 /**
  * @brief Initializes all structures that have to be created and initialized.
