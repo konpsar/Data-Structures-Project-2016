@@ -66,7 +66,7 @@ movieCategory_t *categoryArray[5];  /* The categories array (pinakas kathgoriwn)
 // to reduce possibility of collisions, i will use the first prime number 
 // bigger than max_users
 
-int hash_function(int key, int hashtable_size){
+int get_hash(int key, int hashtable_size){
 	// int M_step = int(max_id/max_users);
 	int mul_map = int(std::floor(max_users/max_id));
 	return (key*mul_map)%hashtable_size;

@@ -17,14 +17,16 @@
 
 int register_user(unsigned int userID){
 	user_t * new_user = new user_t;
-	
+	user_t * chain_head =  NULL;
 	//initialize new_user
 	new_user->userID = userID;
 	new_user->history = NULL;
 	
-
-	// Add to the right place of hashtable
-
+	//Get hash value
+	int hash_value = get_hash(userID, hashtable_size);
+	// Add to the right place of hashtable - Head of chain in specific index
+	new_user->next = user_hashtable_p[hash_value];
+	user_hashtable_p[hash_value] = new_user;
 	return 1;
  }
  
