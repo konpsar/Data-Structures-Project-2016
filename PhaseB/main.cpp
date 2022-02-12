@@ -73,6 +73,11 @@ int get_hash(int key, int hashtable_size){
 }
 
 int hash_lookup(int key){
+	if(!user_hashtable_p) return 0;
+	int hash_value = get_hash(key, hashtable_size);
+	user_t * chain_head = user_hashtable_p[hash_value];
+	//Linear Search in specific chain
+	// for(user_t * current = chain_head; current; current = current->next)
 	return 1;
 }
 
@@ -83,8 +88,7 @@ int hash_lookup(int key){
  *         1 on failure
  */
 
-
- int initialize(){
+ int create_hashtable(){
 	 //max users num -> max_users
 	 //max userID -> max_id
 	 int i=0;
@@ -95,13 +99,27 @@ int hash_lookup(int key){
 	//  while(primes_g[i]<max_id) i++;
 	 while(primes_g[i]<hash_size_not_prime) i++;
 	 hashtable_size = primes_g[i];
+	 *user_hashtable_p = new user_t[hashtable_size];
 	 
 	 return 1;
  }
+//  int initialize(){
+// 	 //max users num -> max_users
+// 	 //max userID -> max_id
+// 	 int i=0;
+// 	 int hash_size_not_prime = max_users;
+// 	//  if (hash_size_not_prime<1) hash_size_not_prime = max_users/max_id;
+
+// 	 // CHECK < or <=
+// 	//  while(primes_g[i]<max_id) i++;
+// 	 while(primes_g[i]<hash_size_not_prime) i++;
+// 	 hashtable_size = primes_g[i];
+	 
+// 	 return 1;
+//  }
 
 int main(int argc, char** argv)
 {
-	initialize();
 	FILE *fin = NULL;
 	char buff[BUFFER_SIZE], event;
 

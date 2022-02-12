@@ -24,7 +24,10 @@ int register_user(unsigned int userID){
 	
 	//Get hash value
 	int hash_value = get_hash(userID, hashtable_size);
+	
 	// Add to the right place of hashtable - Head of chain in specific index
+	if(!user_hashtable_p) create_hashtable();
+
 	new_user->next = user_hashtable_p[hash_value];
 	user_hashtable_p[hash_value] = new_user;
 	return 1;
@@ -41,7 +44,14 @@ int register_user(unsigned int userID){
  */
 
  int unregister_user(unsigned int userID){
-	 return 1;
+	user_t *chain_head =  NULL, *user_del = NULL;
+	
+	//Get hash value
+	int hash_value = get_hash(userID, hashtable_size);
+	chain_head = user_hashtable_p[hash_value];
+
+	
+	return 1;
  }
  
  /**

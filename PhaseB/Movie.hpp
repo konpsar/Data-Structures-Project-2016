@@ -68,7 +68,7 @@ extern unsigned int primes_g[160];
 
 int get_hash(int key, int hashtable_size);
 int hash_lookup(int key);
-
+int create_hashtable(void);
 /**
  * @brief Creates a new user.
  * Creates a new user with userID as its identification.
